@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<title>SOLO Skill 提分报告 × 9 — 高赞Skill评测合集</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue","PingFang SC",sans-serif;background:#f5f5f7;color:#1d1d1f;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1100px;margin:0 auto;padding:56px 24px 80px}
+
+.hero{text-align:center;margin-bottom:48px}
+.hero-label{display:inline-block;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#86868b;margin-bottom:10px;padding:5px 14px;background:#fff;border-radius:100px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.hero h1{font-size:40px;font-weight:700;letter-spacing:-0.02em;color:#1d1d1f;margin-bottom:6px}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,#0071e3,#34c759);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:17px;color:#86868b}
+.hero .meta{display:flex;gap:24px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+.hero .meta span{font-size:13px;color:#86868b}
+.hero .meta span b{color:#1d1d1f;font-size:16px}
+
+.section-hd{font-size:24px;font-weight:700;color:#1d1d1f;letter-spacing:-0.01em;margin:48px 0 20px}
+
+.cards-grid{display:grid;grid-template-columns:repeat(2, 1fr);gap:18px}
+.skill-card{background:#fff;border-radius:18px;box-shadow:0 1px 4px rgba(0,0,0,0.05);overflow:hidden}
+
+.skill-card-header{padding:18px 20px 14px;border-bottom:1px solid #f3f3f5;display:flex;align-items:center;gap:12px}
+
+.head-info{flex:1;min-width:0}
+.head-name{font-size:20px;font-weight:700;color:#1d1d1f;margin-bottom:3px}
+.head-desc{font-size:13px;color:#86868b;line-height:1.4}
+.head-badges{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px}
+.badge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:100px;white-space:nowrap}
+.b-S{background:rgba(255,214,10,0.12);color:#c77c00}
+.b-A{background:rgba(0,113,227,0.08);color:#0071e3}
+.b-B{background:rgba(52,199,89,0.1);color:#248a3d}
+.b-C{background:rgba(134,134,139,0.1);color:#636366}
+.b-D{background:rgba(255,59,48,0.1);color:#d70015}
+.b-pass{background:rgba(52,199,89,0.12);color:#248a3d}
+.b-cond{background:rgba(255,159,10,0.12);color:#c77c00}
+.b-fail{background:rgba(255,59,48,0.12);color:#d70015}
+
+.score-circles{display:flex;gap:6px;flex-shrink:0}
+.sc-circle{width:40px;height:40px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,0.08);border:2px solid rgba(0,0,0,0.04)}
+.sc-circle b{font-size:13px;font-weight:700;line-height:1;color:#fff}
+.sc-circle span{font-size:8px;opacity:.85;font-weight:500;color:rgba(255,255,255,0.8);margin-top:1px}
+.sc-5{background:linear-gradient(135deg,#34c759,#30d158)}
+.sc-4{background:linear-gradient(135deg,#0071e3,#0a84ff)}
+.sc-3{background:linear-gradient(135deg,#af52de,#bf5af2)}
+.sc-2{background:linear-gradient(135deg,#ff9f0a,#ffb340)}
+.sc-1{background:linear-gradient(135deg,#ff3b30,#ff453a)}
+
+.skill-card-body{padding:16px 20px;display:flex;gap:16px;flex-wrap:wrap}
+.card-left{flex:1;min-width:0}
+.card-right{width:140px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:4px;padding-top:4px}
+.card-bottom{width:100%;margin-top:12px;padding-top:12px;border-top:1px dashed #f3f3f5}
+
+.rank-badge{width:48px;height:48px;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+.rank-badge.rank-1{background:linear-gradient(135deg,#ffd60a,#ff9f0a)}
+.rank-badge.rank-2{background:linear-gradient(135deg,#c0c0c0,#a8a8a8)}
+.rank-badge.rank-3{background:linear-gradient(135deg,#cd7f32,#b87333)}
+.rank-badge.rank-n{background:#f0f0f0}
+.rank-badge b{font-size:15px;font-weight:800;line-height:1;color:#fff}
+.rank-badge.rank-n b{color:#a1a1aa}
+.rank-badge span{font-size:8px;color:#fff;opacity:.85;font-weight:500}
+.rank-badge.rank-n span{color:#a1a1aa}
+
+.card-right .score-big{font-size:26px;font-weight:800;line-height:1}
+.card-right .grade-pill{font-size:12px;font-weight:700;padding:3px 12px;border-radius:100px}
+.card-right .likes-sm{font-size:11px;color:#86868b}
+.card-right .gate-sm{font-size:10px;font-weight:700;padding:2px 8px;border-radius:6px}
+
+.mini-lb{width:100%;margin-top:4px;padding-top:6px;border-top:1px solid #e8e8ed}
+.mini-lb h5{font-size:9px;font-weight:700;color:#86868b;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px;text-align:center}
+.mini-lb-item{display:flex;align-items:center;gap:4px;padding:2px 0;font-size:10px}
+.mini-lb-rank{width:14px;text-align:center;font-weight:700;color:#a1a1aa;font-size:9px}
+.mini-lb-rank.top3{color:#1d1d1f}
+.mini-lb-name{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#3c3c43}
+.mini-lb-score{font-weight:700;font-size:10px}
+
+.radar-wrap{display:flex;justify-content:center;margin-bottom:14px}
+.radar{width:200px;height:200px}
+.radar svg{width:100%;height:100%}
+
+.dimensions{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px}
+.dim-item{display:flex;align-items:center;gap:6px;font-size:12px}
+.dim-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.dim-label{color:#86868b;flex:1}
+.dim-val{font-weight:700;color:#1d1d1f}
+
+.deductions{padding-top:10px;border-top:1px dashed #f3f3f5}
+.deductions h4{font-size:11px;font-weight:700;color:#1d1d1f;text-transform:uppercase;letter-spacing:0.7px;margin-bottom:8px}
+.ded-item{font-size:12px;margin-bottom:6px;padding:6px 8px 6px 20px;position:relative;line-height:1.5;color:#3c3c43;background:rgba(255,59,48,0.03);border-radius:8px;border-left:3px solid}
+.ded-item::before{content:'';position:absolute;left:7px;top:10px;width:5px;height:5px;border-radius:50%}
+.ded-p0{border-left-color:#ff3b30;background:rgba(255,59,48,0.05)}
+.ded-p0::before{background:#ff3b30;box-shadow:0 0 4px rgba(255,59,48,0.3)}
+.ded-p1{border-left-color:#ff9f0a;background:rgba(255,159,10,0.04)}
+.ded-p1::before{background:#ff9f0a}
+.ded-p2{border-left-color:#0071e3;background:rgba(0,113,227,0.04)}
+.ded-p2::before{background:#0071e3}
+.ded-dim{font-size:10px;font-weight:600;color:#86868b;margin-bottom:2px;text-transform:uppercase;letter-spacing:0.5px}
+
+.boost-section h4{font-size:11px;font-weight:700;color:#1d1d1f;text-transform:uppercase;letter-spacing:0.7px;margin-bottom:8px}
+.boost-card{background:#fff;border:1px solid #e8e8ed;border-radius:12px;padding:12px 14px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,0.03)}
+.boost-card-header{display:flex;align-items:center;gap:8px;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid #f3f3f5}
+.boost-tag{padding:3px 10px;border-radius:6px;font-size:11px;font-weight:700;white-space:nowrap;flex-shrink:0}
+.boost-5{background:rgba(52,199,89,0.1);color:#248a3d}
+.boost-30{background:rgba(0,113,227,0.08);color:#0071e3}
+.boost-F{background:rgba(255,159,10,0.1);color:#c77c00}
+.boost-title{font-size:13px;font-weight:700;color:#1d1d1f;flex:1}
+.boost-delta{color:#34c759;font-weight:700;font-size:13px}
+.boost-steps{font-size:12px;color:#3c3c43;line-height:1.7}
+.boost-steps li{margin-bottom:4px;padding-left:4px}
+.boost-steps li::marker{color:#86868b}
+.boost-why{font-size:11px;color:#86868b;margin-top:6px;padding-top:6px;border-top:1px dashed #f0f0f0;font-style:italic}
+
+.insights{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.insight-card{background:#fff;border-radius:14px;padding:18px 20px;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+.insight-card h4{font-size:15px;font-weight:700;color:#1d1d1f;margin-bottom:10px}
+.insight-card p{font-size:13px;color:#86868b;line-height:1.6}
+.insight-card .highlight{color:#1d1d1f;font-weight:600}
+
+.findings-list{list-style:none}
+.findings-list li{padding:8px 0;border-bottom:1px solid #f3f3f5;font-size:13px;color:#3c3c43;display:flex;gap:8px;align-items:baseline}
+.findings-list li:last-child{border-bottom:none}
+.findings-list .num{color:#ff3b30;font-weight:700;min-width:20px}
+
+.benchmark-table{width:100%;border-collapse:collapse;font-size:13px}
+.benchmark-table th{text-align:left;padding:8px 10px;color:#86868b;border-bottom:1px solid #f3f3f5;font-weight:500}
+.benchmark-table td{padding:8px 10px;border-bottom:1px solid #f3f3f5}
+.benchmark-table td:first-child{color:#1d1d1f;font-weight:600}
+
+.signature{text-align:center;margin-top:56px;padding:36px 20px 0;border-top:1px solid #e5e5e5}
+.sig-icon{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,#1d1d1f,#3a3a3c);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff;font-weight:800;letter-spacing:-1px}
+.sig-name{font-size:19px;font-weight:700;color:#1d1d1f;letter-spacing:-0.01em;margin-bottom:2px}
+.sig-title{font-size:13px;color:#86868b;margin-bottom:12px}
+.sig-quote{font-size:15px;color:#1d1d1f;font-style:italic;max-width:420px;margin:0 auto;line-height:1.55}
+.sig-line{width:36px;height:2.5px;background:linear-gradient(90deg,#0071e3,#34c759);border-radius:2px;margin:14px auto 0}
+
+@media(max-width:800px){
+.hero h1{font-size:28px}
+.skill-card-header{flex-wrap:wrap}
+.score-circles{order:3;width:100%;margin-top:8px}
+.skill-card-body{flex-direction:column}
+.card-right{width:100%;flex-direction:row;flex-wrap:wrap;justify-content:center;padding:12px 0;border-top:1px solid #f3f3f5;margin-top:12px}
+.mini-lb{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="hero">
+  <div class="hero-label">剑锋传奇</div>
+  <h1><em>SOLO Skill 提分官</em><br>深度评测</h1>
+  <div class="meta">
+    <span>数据来源 <b>TRAE社区论坛</b></span>
+    <span>生成日期 <b>2026-05-20</b></span>
+    <span>满分 <b>25分</b></span>
+    <span>A级 <b>2</b></span>
+    <span>B级 <b>3</b></span>
+    <span>C级 <b>4</b></span>
+  </div>
+</div>
+
+<div style="text-align:center;margin:24px 0 40px">
+  <button id="exportBtn" style="display:inline-flex;align-items:center;gap:8px;padding:12px 28px;background:linear-gradient(135deg,#0071e3,#5856d6);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;box-shadow:0 4px 14px rgba(0,113,227,0.3);transition:all .2s" onclick="exportImage()">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    导出PNG图片
+  </button>
+  <div id="exportMsg" style="margin-top:10px;font-size:13px;color:#86868b"></div>
+</div>
+
+<div class="section-hd">各Skill五维度评分</div>
+<div class="cards-grid" id="cards"></div>
+
+<div class="section-hd">关键发现</div>
+<div class="insights">
+  <div class="insight-card">
+    <h4>评分与赞数相关性</h4>
+    <p>A级平均赞数 <span class="highlight">73</span><br>B级平均赞数 <span class="highlight">26.7</span><br>C级平均赞数 <span class="highlight">15.8</span></p>
+  </div>
+  <div class="insight-card">
+    <h4>共性问题 TOP5</h4>
+    <ol class="findings-list">
+      <li><span class="num">1</span> 差异化声明缺失（7/9个Skill）</li>
+      <li><span class="num">2</span> 脚本层证据不足（6/9个Skill）</li>
+      <li><span class="num">3</span> 触发词冲突（5/9个Skill）</li>
+      <li><span class="num">4</span> 无降级方案（5/9个Skill）</li>
+      <li><span class="num">5</span> 输出格式不明确（4/9个Skill）</li>
+    </ol>
+  </div>
+  <div class="insight-card">
+    <h4>最佳实践标杆</h4>
+    <table class="benchmark-table">
+      <tr><th>维度</th><th>标杆Skill</th></tr>
+      <tr><td>实用性</td><td>ml-experiment-tree / github-open-source-scout</td></tr>
+      <tr><td>创新性</td><td>ml-experiment-tree / kz-skill-creator</td></tr>
+      <tr><td>完成度</td><td>make-exam</td></tr>
+      <tr><td>体验感</td><td>make-exam / github-open-source-scout</td></tr>
+      <tr><td>自进化力</td><td>kz-skill-creator（元技能天然有自进化属性）</td></tr>
+      <tr><td>发帖质量</td><td>github-open-source-scout</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="signature">
+  <div class="sig-icon">剑</div>
+  <div class="sig-name">剑锋传奇</div>
+  <div class="sig-title">SOLO Skill 提分官 · 创作者</div>
+  <div class="sig-quote">"分数不会说谎，但方向会。先找到方向，再出发。"</div>
+  <div class="sig-line"></div>
+</div>
+
+</div>
+
+<script>
+const skills = [
+  {name:"make-exam",label:"K12考卷生成",desc:"教师版/学生版双模板·4脚本+2模板+evals完整包",likes:87,score:19,grade:"A",gate:"PASS",dims:{实用性:4,创新性:4,完成度:5,体验感:4,自进化力:2},deductions:[{lv:"p2",dim:"实用性",text:"K12教师在SOLO中占比偏低（-1）"},{lv:"p1",dim:"创新性",text:"考卷生成类工具已存在（-1）"},{lv:"p1",dim:"自进化力",text:"无自我迭代机制，模板和规则需手动更新（-3）"}],boosts:[{time:"5min",title:"增加差异化声明",delta:"+1→20",steps:["在SKILL.md顶部添加\"与其他考卷工具区别\"段落","列出3个独特卖点：双模板/4脚本/evals验证","用对比表格展示差异"],why:"评审第一眼找差异化，没有就默认\"又一个考卷工具\""},{time:"30min",title:"Jinja2自动安装或纯文本fallback",delta:"+1→21",steps:["在脚本开头添加pip install jinja2自动安装","提供纯文本版考卷作为fallback","在README标注\"零依赖模式\""],why:"体验感扣分点，解决依赖=直接+1分"},{time:"发布版",title:"扩展到成人教育+自进化模板库",delta:"+2→23",steps:["新增成人教育模板（职业技能/资格认证）","新增企业培训模板（入职/产品/合规）","添加模板自动评分反馈机制，根据使用数据迭代模板"],why:"实用性+自进化力双提升，覆盖更广受众+形成进化闭环"}]},
+  {name:"ml-experiment-tree",label:"ML实验树记录",desc:"AI偷懒检测+数据泄露防御·业界首创",likes:59,score:18,grade:"A",gate:"PASS",dims:{实用性:5,创新性:5,完成度:4,体验感:3,自进化力:1},deductions:[{lv:"p1",dim:"体验感",text:"实验树概念理解成本高，新手不知如何开始（-1）"},{lv:"p1",dim:"完成度",text:"无自动化脚本仅靠SKILL.md规则驱动（-1）"},{lv:"p1",dim:"自进化力",text:"实验树结构无法自动学习优化（-4）"}],boosts:[{time:"5min",title:"明确触发词+最小启动示例",delta:"+1→19",steps:["在SKILL.md顶部添加触发词列表：\"实验树\"\"ML实验\"\"偷懒检测\"","提供1个3行代码的最小启动示例","标注\"30秒上手\"降低理解成本"],why:"体验感从3→4，降低新手门槛是最快提分路径"},{time:"30min",title:"添加3步QUICKSTART",delta:"+1→20",steps:["Step1: 初始化实验树目录结构","Step2: 运行第一个实验并记录分支","Step3: 查看实验对比报告","每步配截图和预期输出"],why:"完成度从4→5，有脚手架才有\"完成\"的体感"},{time:"发布版",title:"分支目录自动生成+实验模式学习",delta:"+2→22",steps:["实现CLI一键生成分支目录脚本","添加实验模式识别：自动归类常见实验类型","基于历史实验数据推荐最佳分支策略"],why:"完成度+自进化力双提升，自动化是进化力的基础"}]},
+  {name:"github-open-source-scout",label:"开源选型侦察",desc:"搜索+协议识别+评估推荐",likes:53,score:17,grade:"B",gate:"CONDITIONAL",dims:{实用性:5,创新性:4,完成度:3,体验感:4,自进化力:1},deductions:[{lv:"p1",dim:"完成度",text:"未展示脚本实现细节（-1）"},{lv:"p1",dim:"完成度",text:"无GitHub API限流降级方案（-1）"},{lv:"p1",dim:"自进化力",text:"评估标准固定，无法根据反馈优化（-4）"}],boosts:[{time:"5min",title:"增加\"与同类Skill区别\"段落",delta:"+1→18",steps:["在SKILL.md添加\"与已有GitHub搜索Skill差异化\"段落","列出3个独特点：协议识别/评估推荐/风险预警","用表格对比与通用搜索Skill的差异"],why:"创新性声明缺失是扣分重灾区，补上直接+1"},{time:"30min",title:"补充脚本截图+限流处理",delta:"+2→20",steps:["添加核心脚本运行截图（搜索/协议识别/评估）","实现GitHub API 429限流自动降级：缓存+延迟重试","在README标注\"限流保护已内置\""],why:"完成度从3→5，脚本证据+降级方案是完成度的核心"},{time:"发布版",title:"独特触发词+评估模型自学习",delta:"+2→22",steps:["注册独特触发词\"开源选型\"\"技术选型\"","添加评估权重可配置：用户可调整实用性/活跃度/安全权重","记录用户选择偏好，下次推荐时自动调整权重"],why:"创新性+自进化力提升，从静态工具变成会学习的助手"}]},
+  {name:"xiaohongshu-content-checker",label:"小红书内容审核",desc:"敏感词检测+内容定位分析",likes:17,score:15,grade:"B",gate:"CONDITIONAL",dims:{实用性:4,创新性:4,完成度:3,体验感:3,自进化力:1},deductions:[{lv:"p1",dim:"完成度",text:"敏感词库来源不明，无更新机制（-1）"},{lv:"p1",dim:"完成度",text:"无自动化脚本，仅SKILL.md驱动（-1）"},{lv:"p1",dim:"自进化力",text:"词库静态无法跟进平台规则变化（-4）"}],boosts:[{time:"5min",title:"说明词库来源+更新机制",delta:"+1→16",steps:["在SKILL.md明确标注词库来源（如：社区贡献+官方规则提取）","添加词库更新频率说明（如：每周同步小红书审核规则）","提供词库贡献入口：用户可提交新敏感词"],why:"完成度最直接的补丁，词库可信度=工具可信度"},{time:"30min",title:"独特触发词+明确输出格式",delta:"+2→18",steps:["注册独特触发词\"小红书审核\"\"内容合规\"替代冲突词","定义结构化输出格式：风险等级/违规类型/修改建议","添加输出示例截图展示完整审核报告"],why:"体验感+创新性双提升，独特触发词解决冲突+明确输出降低理解成本"},{time:"发布版",title:"检测脚本+词库自动同步",delta:"+3→21",steps:["实现Python检测脚本：输入文案→输出审核报告","添加小红书规则页面自动爬取+词库同步机制","实现误报反馈收集：用户标记误报→自动调整词库权重"],why:"完成度+自进化力质变，从文档驱动→脚本驱动+自动进化"}]},
+  {name:"kz-skill-creator",label:"造技能的技能",desc:"元技能·创建/重构/评测三合一",likes:10,score:17,grade:"B",gate:"CONDITIONAL",dims:{实用性:4,创新性:5,完成度:2,体验感:3,自进化力:3},deductions:[{lv:"p0",dim:"完成度",text:"元技能自身质量无法验证（-2）"},{lv:"p1",dim:"完成度",text:"无生成Skill的质量门控（-1）"},{lv:"p1",dim:"体验感",text:"元技能概念理解成本高（-1）"}],boosts:[{time:"5min",title:"添加生成Skill质量检查清单",delta:"+1→18",steps:["在SKILL.md添加\"生成Skill质量门控\"5项检查清单","包含：触发词唯一性/脚本可运行性/输出格式明确性","每项配PASS/FAIL判定标准"],why:"完成度从2→3，元技能自证质量是基本要求"},{time:"30min",title:"QUICKSTART+验证流程",delta:"+2→20",steps:["添加3步快速上手：创建→填充→验证","实现生成Skill的自动验证脚本（检查必要文件/字段）","提供before/after对比示例展示生成效果"],why:"体验感+完成度双提升，有验证流程才有\"造技能\"的闭环"},{time:"发布版",title:"before/after示例+自进化反馈环",delta:"+2→22",steps:["制作3组before/after完整示例（简单/中等/复杂Skill）","添加生成Skill使用反馈收集机制","基于反馈自动优化生成模板和检查规则"],why:"自进化力从3→4，元技能的终极形态是能自我改进的技能工厂"}]},
+  {name:"pets-skills",label:"桌面宠物",desc:"Electron框架突破SOLO边界",likes:35,score:13,grade:"C",gate:"FAIL",dims:{实用性:3,创新性:5,完成度:2,体验感:2,自进化力:1},deductions:[{lv:"p0",dim:"完成度",text:"0.1.1版本功能不完整（-2）"},{lv:"p0",dim:"体验感",text:"仅Mac端Windows无法使用（-2）"},{lv:"p1",dim:"自进化力",text:"宠物行为固定无学习能力（-4）"}],boosts:[{time:"5min",title:"强化定位声明+标注Mac only",delta:"+2→15",steps:["在SKILL.md顶部醒目标注\"⚠️ 当前仅支持macOS\"","添加\"与桌面宠物App差异化\"段落强调SOLO生态独特性","列出路线图：Win支持/宠物互动/社区分享"],why:"体验感从2→3，诚实标注比隐藏限制更能赢得信任"},{time:"30min",title:"补充交互截图+错误处理",delta:"+2→17",steps:["添加宠物互动截图（喂食/玩耍/状态变化）","实现优雅的错误处理：平台不支持时显示友好提示","添加宠物状态持久化：重启后恢复上次状态"],why:"完成度从2→3，截图是功能存在的最直接证据"},{time:"发布版",title:"内置默认资源+Win支持+行为学习",delta:"+3→20",steps:["内置3个默认宠物资源免去Petdex下载","实现Windows平台支持（Electron跨平台能力）","添加宠物行为学习：根据用户互动频率调整活跃度"],why:"实用性+体验感+自进化力三提升，从demo变成真正可用的产品"}]},
+  {name:"traebook",label:"聊天变书籍",desc:"自动结构化聊天为可交互书籍",likes:10,score:13,grade:"C",gate:"FAIL",dims:{实用性:3,创新性:4,完成度:3,体验感:2,自进化力:1},deductions:[{lv:"p0",dim:"体验感",text:"聊天→书籍转换流程不直观（-2）"},{lv:"p1",dim:"实用性",text:"场景有趣但非刚需（-1）"},{lv:"p1",dim:"自进化力",text:"书籍结构模板固定无法优化（-4）"}],boosts:[{time:"5min",title:"添加3步快速上手示例",delta:"+1→14",steps:["Step1: 粘贴聊天记录（支持微信/飞书/Slack格式）","Step2: 选择书籍类型（教程/故事/知识库）","Step3: 一键生成可交互书籍","每步配截图和预期输出"],why:"体验感从2→3，降低上手门槛是最快提分"},{time:"30min",title:"明确用户画像+输出格式",delta:"+2→16",steps:["定义3类核心用户：内容创作者/知识管理者/团队文档","明确输出格式：目录结构/章节标题/交互元素","添加2个完整输入→输出示例展示转换效果"],why:"实用性+体验感双提升，用户知道\"我能用来干嘛\"才会用"},{time:"发布版",title:"书籍质量校验+结构优化学习",delta:"+2→18",steps:["实现书籍质量自动校验：章节完整性/逻辑连贯性/重复检测","添加结构优化建议：根据阅读体验指标推荐章节重组","记录用户修改偏好，下次生成时自动调整结构策略"],why:"完成度+自进化力提升，从一次性转换变成持续优化的知识工具"}]},
+  {name:"ai-sector-investor",label:"AI产业链投资",desc:"垂直领域投资分析·需外部数据源",likes:11,score:12,grade:"C",gate:"FAIL",dims:{实用性:3,创新性:3,完成度:3,体验感:2,自进化力:1},deductions:[{lv:"p0",dim:"体验感",text:"需配置外部数据源门槛高（-2）"},{lv:"p1",dim:"实用性",text:"AI产业链受众有限（-1）"},{lv:"p1",dim:"自进化力",text:"分析框架固定无法适应市场变化（-4）"}],boosts:[{time:"5min",title:"提供默认数据源配置",delta:"+2→14",steps:["内置2-3个免费数据源作为默认配置（Yahoo Finance/东方财富API）","添加\"零配置模式\"说明：开箱即用无需手动配置","提供数据源切换指南：免费→付费逐步升级"],why:"体验感从2→3，降低配置门槛是解决\"用不起来\"的关键"},{time:"30min",title:"强调AI产业链差异化+分析模板",delta:"+2→16",steps:["在SKILL.md添加\"与通用金融分析Skill区别\"段落","提供3套分析模板：产业链地图/龙头对比/估值模型","每套模板配1个完整分析示例"],why:"创新性+完成度提升，差异化声明+模板化输出=专业感"},{time:"发布版",title:"扩展到通用行业+分析模型自优化",delta:"+3→19",steps:["扩展覆盖范围：新能源/半导体/生物医药等热门赛道","添加分析模型回测功能：对比历史推荐与实际走势","基于回测结果自动调整分析权重和推荐策略"],why:"实用性+自进化力质变，从AI单一赛道→多赛道+会学习的分析师"}]},
+  {name:"image-prompt-reverse",label:"图片反推提示词",desc:"依赖视觉模型API·CLIP Interrogator已有同类",likes:7,score:10,grade:"C",gate:"FAIL",dims:{实用性:3,创新性:2,完成度:2,体验感:3,自进化力:0},deductions:[{lv:"p0",dim:"创新性",text:"CLIP Interrogator等工具已存在（-2）"},{lv:"p0",dim:"完成度",text:"依赖视觉模型API无降级方案（-2）"},{lv:"p0",dim:"自进化力",text:"无任何自我迭代或学习能力（-5）"}],boosts:[{time:"5min",title:"差异化声明+本地fallback方案",delta:"+2→12",steps:["在SKILL.md添加\"与CLIP Interrogator区别\"段落强调SOLO生态集成","实现本地fallback：API不可用时用简单颜色/构图分析","标注\"支持离线模式\"降低使用门槛"],why:"创新性+完成度最直接的补丁，差异化+降级=基本生存线"},{time:"30min",title:"扩展场景+API失败处理",delta:"+2→14",steps:["扩展使用场景：设计参考提取/风格迁移辅助/配色方案生成","实现API失败优雅降级：3次重试→本地分析→友好提示","添加输出格式选择：Midjourney/DALL-E/Stable Diffusion格式"],why:"实用性+体验感提升，场景扩展+健壮性=从玩具变工具"},{time:"发布版",title:"风格分析+配色提取+提示词优化学习",delta:"+3→17",steps:["实现风格分析引擎：识别艺术风格/构图/光影特征","添加配色提取功能：输出主色/辅色/情绪色板","记录用户对提示词的修改偏好，自动优化生成策略"],why:"创新性+自进化力突破，从\"又一个反推工具\"变成\"会学习的视觉分析助手\""}]}
+];
+
+const dimColors={实用性:"#34c759",创新性:"#0071e3",完成度:"#ff9f0a",体验感:"#af52de",自进化力:"#ff6b6b"};
+const gradeColor={S:"#c77c00",A:"#0071e3",B:"#248a3d",C:"#636366",D:"#ff3b30"};
+
+function radarPoints(dims,cx,cy,r){
+  const keys=Object.keys(dims),n=keys.length;
+  return keys.map((k,i)=>{
+    const angle=(Math.PI*2*i/n)-Math.PI/2;
+    const val=dims[k]/5;
+    return{x:cx+r*val*Math.cos(angle),y:cy+r*val*Math.sin(angle),key:k,val:dims[k]};
+  });
+}
+
+function renderRadar(dims){
+  const cx=100,cy=100,r=75;
+  const pts=radarPoints(dims,cx,cy,r);
+  const keys=Object.keys(dims);
+  const n=keys.length;
+  let svg=`<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">`;
+  for(let ring=1;ring<=5;ring++){
+    const rr=r*ring/5;
+    const ringPts=keys.map((k,i)=>{const a=Math.PI*2*i/n-Math.PI/2;return`${cx+rr*Math.cos(a)},${cy+rr*Math.sin(a)}`}).join(" ");
+    svg+=`<polygon points="${ringPts}" fill="none" stroke="#e8e8ed" stroke-width="0.65"/>`;
+  }
+  keys.forEach((k,i)=>{
+    const a=Math.PI*2*i/n-Math.PI/2;
+    svg+=`<line x1="${cx}" y1="${cy}" x2="${cx+r*Math.cos(a)}" y2="${cy+r*Math.sin(a)}" stroke="#e8e8ed" stroke-width="0.65"/>`;
+    const lx=cx+(r+18)*Math.cos(a),ly=cy+(r+18)*Math.sin(a);
+    svg+=`<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" fill="${dimColors[k]}" font-size="11" font-weight="600">${dims[k]}</text>`;
+  });
+  const dataPts=pts.map(p=>`${p.x},${p.y}`).join(" ");
+  svg+=`<polygon points="${dataPts}" fill="rgba(0,113,227,0.08)" stroke="#0071e3" stroke-width="1.5" stroke-linejoin="round"/>`;
+  pts.forEach(p=>{svg+=`<circle cx="${p.x}" cy="${p.y}" r="3.5" fill="#0071e3"/>`;});
+  return svg+`</svg>`;
+}
+
+function renderCards(){
+  const el=document.getElementById("cards");
+  el.innerHTML=skills.map((s,i)=>{
+    const rc=i===0?"rank-1":i===1?"rank-2":i===2?"rank-3":"rank-n";
+    const gc=s.gate==="PASS"?"gate-PASS":s.gate==="CONDITIONAL"?"gate-COND":"gate-FAIL";
+    const gl=s.gate==="CONDITIONAL"?"COND":s.gate;
+    const gc2=s.grade==="S"?"b-S":s.grade==="A"?"b-A":s.grade==="B"?"b-B":s.grade==="C"?"b-C":"b-D";
+    const gt=s.gate==="PASS"?"b-pass":s.gate==="CONDITIONAL"?"b-cond":"b-fail";
+    const circles=["实用性","创新性","完成度","体验感","自进化力"].map(k=>{
+      const v=s.dims[k];
+      return `<div class="sc-circle sc-${v}"><b>${v}</b><span>${k.substring(0,2)}</span></div>`;
+    }).join("");
+    const dimsHtml=["实用性","创新性","完成度","体验感","自进化力"].map(k=>{
+      const v=s.dims[k];
+      return `<div class="dim-item"><span class="dim-dot" style="background:${dimColors[k]}"></span><span class="dim-label">${k}</span><span class="dim-val">${v}/5</span></div>`;
+    }).join("");
+    const dedHtml=s.deductions.map(d=>`<div class="ded-item ded-${d.lv}"><div class="ded-dim">${d.dim}</div>${d.text}</div>`).join("");
+    const boostHtml=s.boosts.map(b=>{
+      const cls=b.time==="5min"?"boost-5":b.time==="30min"?"boost-30":"boost-F";
+      const stepsHtml=b.steps?`<ol class="boost-steps">${b.steps.map(step=>`<li>${step}</li>`).join("")}</ol>`:"";
+      const whyHtml=b.why?`<div class="boost-why">💡 ${b.why}</div>`:"";
+      return `<div class="boost-card">
+        <div class="boost-card-header">
+          <span class="boost-tag ${cls}">${b.time}</span>
+          <span class="boost-title">${b.title}</span>
+          <span class="boost-delta">${b.delta}</span>
+        </div>
+        ${stepsHtml}
+        ${whyHtml}
+      </div>`;
+    }).join("");
+    const miniLb=skills.map((sk,si)=>{
+      const top=si<3?"top3":"";
+      const active=si===i?"font-weight:700;color:#1d1d1f;background:#f5f5f7;border-radius:4px;padding:2px 4px;margin:-2px -4px":"";
+      return `<div class="mini-lb-item" style="${active}"><div class="mini-lb-rank ${top}">${si+1}</div><div class="mini-lb-name">${sk.label}</div><div class="mini-lb-score" style="color:${gradeColor[sk.grade]}">${sk.score}/25</div></div>`;
+    }).join("");
+    return `<div class="skill-card">
+      <div class="skill-card-header">
+        <div class="head-info">
+          <div class="head-name">${s.label}</div>
+          <div class="head-desc">${s.desc}</div>
+          <div class="head-badges">
+            <span class="badge ${gc2}">${s.grade}级 ${s.score}/25</span>
+            <span class="badge ${gt}">${s.gate}</span>
+            <span class="badge b-likes">👍${s.likes}</span>
+          </div>
+        </div>
+        <div class="score-circles">${circles}</div>
+      </div>
+      <div class="skill-card-body">
+        <div class="card-left">
+          <div class="radar-wrap"><div class="radar">${renderRadar(s.dims)}</div></div>
+          <div class="dimensions">${dimsHtml}</div>
+          <div class="deductions"><h4>三大扣分点</h4>${dedHtml}</div>
+        </div>
+        <div class="card-right">
+          <div class="rank-badge ${rc}"><b>#${i+1}</b><span>RANK</span></div>
+          <div class="score-big" style="color:${gradeColor[s.grade]}">${s.score}</div>
+          <div class="grade-pill grade-${s.grade}">${s.grade}级</div>
+          <div class="likes-sm">👍 ${s.likes}赞</div>
+          <div class="gate-sm ${gc}">${gl}</div>
+          <div class="mini-lb">
+            <h5>排行榜</h5>
+            ${miniLb}
+          </div>
+        </div>
+        <div class="card-bottom">
+          <div class="boost-section"><h4>提分路线</h4>${boostHtml}</div>
+        </div>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+renderCards();
+
+async function exportImage(){
+  const btn=document.getElementById('exportBtn');
+  const msg=document.getElementById('exportMsg');
+  btn.disabled=true;
+  btn.textContent='生成中…';
+  msg.textContent='';
+  try{
+    const el=document.querySelector('.wrap');
+    const canvas=await html2canvas(el,{scale:2,useCORS:true,backgroundColor:'#f5f5f7'});
+    const link=document.createElement('a');
+    link.download='SOLO-Skill-提分报告.png';
+    link.href=canvas.toDataURL('image/png');
+    link.click();
+    msg.textContent='✅ 导出成功！';
+    msg.style.color='#34c759';
+  }catch(e){
+    msg.textContent='❌ 导出失败：'+e.message;
+    msg.style.color='#ff3b30';
+  }
+  btn.disabled=false;
+  btn.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>导出PNG图片';
+}
+</script>
+</body>
+</html>
