@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -69,6 +69,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text"
 .card-right .grade-pill{font-size:12px;font-weight:700;padding:3px 12px;border-radius:100px}
 .card-right .likes-sm{font-size:11px;color:#86868b}
 .card-right .gate-sm{font-size:10px;font-weight:700;padding:2px 8px;border-radius:6px}
+.gate-PASS{background:rgba(52,199,89,0.12);color:#248a3d}
+.gate-COND{background:rgba(255,159,10,0.12);color:#c77c00}
+.gate-FAIL{background:rgba(255,59,48,0.12);color:#ff3b30}
 
 .mini-lb{width:100%;margin-top:4px;padding-top:6px;border-top:1px solid #e8e8ed}
 .mini-lb h5{font-size:9px;font-weight:700;color:#86868b;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px;text-align:center}
@@ -133,7 +136,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text"
 .signature{text-align:center;margin-top:56px;padding:36px 20px 0;border-top:1px solid #e5e5e5}
 .sig-icon{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,#1d1d1f,#3a3a3c);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff;font-weight:800;letter-spacing:-1px}
 .sig-name{font-size:19px;font-weight:700;color:#1d1d1f;letter-spacing:-0.01em;margin-bottom:2px}
-.sig-title{font-size:13px;color:#86868b;margin-bottom:12px}
+.sig-title{font-size:13px;color:#86868b;margin-bottom:8px}
+.sig-link{font-size:11px;color:#86868b;margin-bottom:12px}
+.sig-link a{color:#0071e3;text-decoration:none}
+.sig-link a:hover{text-decoration:underline}
 .sig-quote{font-size:15px;color:#1d1d1f;font-style:italic;max-width:420px;margin:0 auto;line-height:1.55}
 .sig-line{width:36px;height:2.5px;background:linear-gradient(90deg,#0071e3,#34c759);border-radius:2px;margin:14px auto 0}
 
@@ -208,7 +214,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text"
 <div class="signature">
   <div class="sig-icon">剑</div>
   <div class="sig-name">剑锋传奇</div>
-  <div class="sig-title">SOLO Skill 提分官 · 创作者</div>
+  <div class="sig-title">SOLO Skill 提分官 · 创作者</div><div class="sig-link"><a href="https://forum.trae.cn/t/topic/18677" target="_blank">📎 提分官原帖</a></div>
   <div class="sig-quote">"分数不会说谎，但方向会。先找到方向，再出发。"</div>
   <div class="sig-line"></div>
 </div>
@@ -364,3 +370,4 @@ async function exportImage(){
 </script>
 </body>
 </html>
+
